@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Product | E-Commerce</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <style>
+    .company-name {
+  font-family: 'lobster', cursive; /* You can change this to any font */
+  font-size: 38px;
+  font-weight: bold;
+  
+  letter-spacing: 2px;
+  color: black; /* Nice gold/yellow tone */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+}
+
+.company-name:hover {
+  transform: scale(1.05);
+}
+
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      margin-top: 50px;
+      max-width: 600px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn-primary {
+      width: 100%;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+ <!-- Navbar -->
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container d-flex justify-content-center">
+    <span class="navbar-brand company-name">GlowKart</span>
+  </div>
+</nav>
+
+  <!-- Add Product Form -->
+  <div class="container">
+  <h2>Add New Product</h2>
+  <form id="productForm" action="add_product.php" method="POST">
+    <div class="mb-3">
+      <label class="form-label">Product Name:</label>
+      <input type="text" id="productName" name="name" class="form-control" required>
+      <div id="errorMsg" class="text-danger mt-2"></div>
+    </div>
+
+    <div id="detailsSection" class="hidden">
+      <div class="mb-3">
+        <label class="form-label">Category:</label>
+        <input type="text" id="category" name="description" class="form-control" readonly>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantity:</label>
+        <input type="text" id="quantity" name="price" class="form-control" required>
+      </div>
+
+      <div class="mb-3 mt-3">
+        <label class="form-label">Stock:</label>
+        <input type="number" id="stock" name="stock" class="form-control" readonly>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add Product</button>
+    </div>
+  </form>
+</div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const productMap = {
+      "face wash": { category: "Skincare", quantity: "", stock: 20 },
+      "moisturizer": { category: "Skincare", quantity: "", stock: 15 },
+      "shampoo": { category: "Skincare", quantity: "", stock: 30 },
+      "rice": { category: "Grocery", quantity: "", stock: 50 },
+      "atta": { category: "Grocery", quantity: "", stock: 40 },
+      "sugar": { category: "Grocery", quantity: "", stock: 60 }
+    };
+
+    const productInput = document.getElementById("productName");
+    const categoryInput = document.getElementById("category");
+    const quantityInput = document.getElementById("quantity");
+    const stockInput = document.getElementById("stock");
+    const detailsSection = document.getElementById("detailsSection");
+    const errorMsg = document.getElementById("errorMsg");
+
+    productInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const name = productInput.value.trim().toLowerCase();
+        const product = productMap[name];
+
+        if (product) {
+          categoryInput.value = product.category;
+          quantityInput.value = ""; // user must enter this
+          stockInput.value = product.stock;
+
+          detailsSection.classList.remove("hidden");
+          errorMsg.textContent = "";
+        } else {
+          errorMsg.textContent = "Product not recognized. Try: face wash, rice, sugar, etc.";
+          detailsSection.classList.add("hidden");
+        }
+      }
+    });
+
+    document.getElementById("productForm").addEventListener("submit", function (e) {
+      alert("Product added successfully!");
+      // Process form data or send to backend here
+    });
+  </script>
+
+</body>
+</html>
