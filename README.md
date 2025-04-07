@@ -17,4 +17,3 @@ This is a simple e-commerce site built with HTML, CSS, JS, and PHP.
 ## Author
 
 👩‍💻 Simran
-👩‍💻 Anshika
